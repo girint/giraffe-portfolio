@@ -1,65 +1,104 @@
 import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
+const profile = {
+  name: '백기림', // 이름
+  role: '풀스택 개발자 지망',
+  github: 'https://github.com/girint',
+  //resume: '', // 이력서 PDF 링크
+  email: 'bgr1614@naver.com', // 연락용 이메일
+}
+
 const projects = [
   {
     id: 'clone',
     name: '홈페이지 클론',
-    capability: '스스로 구현하는 힘',
+    capability: '직접 구현하는 힘',
     title: '보이던 화면을, 내 코드로.',
     description:
-      'AI 없이 직접 코드를 작성하며 홈페이지를 구현했습니다. 화면을 재현하는 것에서 시작해 반응형 구성과 JavaScript 동작까지 시도했습니다.',
-    skills: [
-      ['화면 구현', '홈페이지의 구조와 스타일을 직접 코드로 옮겼습니다.'],
-      ['반응형 이해', '화면 크기 변화에 대응하는 구성을 시도했습니다.'],
-      ['동작 구현', 'JavaScript로 사용자 행동에 반응하는 기능을 시도했습니다.'],
+      '입문 단계에서 AI 없이 직접 코드를 작성해 리디북스 웹툰 페이지를 구현했습니다. 약 2주 동안 HTML, CSS, JavaScript만으로 완성하며 코드가 흘러가는 방식을 스스로 파악했습니다.',
+    meta: [
+      ['형태', '개인 프로젝트'],
+      ['기간', '2025.09.05 ~ 09.19 (약 2주)'],
+      ['기술', 'HTML · CSS · JavaScript · 카카오 도서 검색 API'],
     ],
+    skills: [
+      ['직접 구현', '슬라이더 5개를 함수 하나로 통합하고, 반복되는 카드 구조를 템플릿으로 정리했습니다.'],
+      ['API 연동', '카카오 도서 검색 API를 호출해 표지·제목·저자를 화면에 채웠습니다.'],
+      ['화면 대응', '검색창 패널, 탭, 자동 배너 동작과 767px 이하 모바일 레이아웃을 구현했습니다.'],
+    ],
+    limit:
+      '별점·리뷰 수는 학습용 더미 데이터이고, 모바일 대응은 한 구간(767px 이하)만 구현했습니다. 디자인과 에셋은 원본 사이트를 참고했습니다.',
+    image: null as string | null,
     repository: 'https://github.com/girint/firsrt_project',
   },
   {
     id: 'backend',
-    name: '백엔드 · DB · 배포',
-    capability: '서비스를 연결하는 힘',
-    title: '화면 뒤의 흐름을 연결하다.',
+    name: '풋살 경기 예약 사이트',
+    capability: '서버와 DB를 설계하는 힘',
+    title: '서버와 데이터의 흐름을 설계하다.',
     description:
-      'Flask로 백엔드 기능을 구현하고 데이터베이스를 연결했습니다. Docker 배포까지 진행하며 서비스의 전체 워크플로우를 경험했습니다.',
-    skills: [
-      ['백엔드 구현', 'Flask로 화면 뒤의 요청 처리 기능을 구현했습니다.'],
-      ['데이터 연동', '데이터베이스와 서비스의 흐름을 연결했습니다.'],
-      ['배포 경험', 'Docker를 활용해 배포 과정까지 진행했습니다.'],
+      '4인 팀 프로젝트에서 백엔드를 전담해 풋살 경기 예약 서비스를 Flask로 구현했습니다. 앱 구조, DB 모델링, 인증, 예약 로직을 맡았습니다.',
+    meta: [
+      ['형태', '4인 팀 · 백엔드 전담'],
+      ['기간', '2025.09.23 ~ 10.01 (9일)'],
+      ['기술', 'Flask · SQLAlchemy · Flask-Migrate · SQLite'],
     ],
-    repository: null,
+    skills: [
+      ['백엔드 구조', 'Blueprint 7개로 기능을 나누고 회원·구장·경기·마이페이지 기능을 구현했습니다.'],
+      ['DB 설계', 'SQLAlchemy 모델 6개와 관계를 설계하고 Flask-Migrate로 스키마 변경을 관리했습니다.'],
+      ['인증·예약 로직', '해시 비밀번호 로그인과 세션 인증, 정원 기반 예약 상태 계산, 신청·취소를 구현했습니다.'],
+    ],
+    limit:
+      '신청·취소의 소유자 검증과 중복 신청 방지가 보완 과제입니다. 결제는 가상 충전이며 DB는 SQLite를 사용했습니다.',
+    image: null as string | null,
+    repository: 'https://github.com/FOREVER-4season/team_4',
   },
   {
     id: 'yolo',
     name: 'YOLO 프로젝트',
-    capability: '학습하고 개선하는 힘',
-    title: '데이터를 준비하고, 다시 학습하다.',
+    capability: '데이터로 개선하는 힘',
+    title: '데이터를 바로잡고, 다시 학습하다.',
     description:
-      'YOLO 기반 아동학대 의심 상황 감지 프로젝트를 진행했습니다. 데이터를 직접 수집하고 라벨링했으며, 재학습을 반복하며 모델 개선에 집중했습니다.',
-    skills: [
-      ['데이터 구축', '학습에 필요한 데이터를 수집하고 라벨링했습니다.'],
-      ['모델 학습', '준비한 데이터로 YOLO 모델을 학습시켰습니다.'],
-      ['반복 개선', '재학습을 반복하며 개선의 시행착오를 경험했습니다.'],
+      '어린이집 영상에서 위험 행동 신호를 탐지해 교사의 확인을 돕는 보조 시스템을 팀으로 개발했습니다. 데이터 수집과 정제, 라벨링 기준 수립부터 학습, 결과 분석 후 데이터 수정까지 진행했습니다.',
+    meta: [
+      ['형태', '팀 프로젝트'],
+      ['담당', '데이터 수집·정제 · 라벨링 · 학습 · 결과 분석'],
+      ['기술', 'YOLO · Python'],
     ],
-    repository: 'https://github.com/girint/Child_Abuse_Sign1.git',
+    skills: [
+      ['데이터 구축', '학습 데이터를 수집·정제하고 라벨링 기준을 세워 라벨링했습니다.'],
+      ['모델 학습', '16개 클래스 동시 학습은 mAP50 20%에 그쳤습니다. 클래스를 줄여 명확화하고 개별 학습한 결과 75%로 개선했습니다.'],
+      ['원인 분석', '통합 모델은 71%로 목표에 못 미쳤고, 클래스 불균형 등 원인을 분석했습니다.'],
+    ],
+    limit:
+      '목표(개별 90%, 통합 85%)에는 미치지 못했습니다. 이 도구는 학대 여부를 판단하지 않고 교사의 확인을 돕는 신호 탐지 보조 도구입니다.',
+    image: null as string | null,
+    repository: 'https://github.com/girint/Child_Abuse_Sign1',
   },
   {
     id: 'chatbot',
-    name: 'RAG · LLM 챗봇',
-    capability: '배운 것을 통합하는 힘',
+    name: 'AI 챗봇 서비스',
+    capability: '연결하고 이끄는 힘',
     title: '기술을 하나의 서비스로.',
     description:
-      'RAG와 LLM을 활용한 챗봇 사이트를 만들었습니다. 프롬프트와 응답 제약을 설계하고 MongoDB 저장·조회, 프론트엔드와 백엔드를 연결했습니다.',
-    skills: [
-      ['AI 활용 설계', '목적에 맞는 프롬프트와 응답 제약을 설계했습니다.'],
-      ['데이터 관리', 'MongoDB로 데이터를 저장하고 불러왔습니다.'],
-      ['서비스 통합', '화면과 서버, AI의 요청·응답 흐름을 연결했습니다.'],
+      'OpenAI API로 8가지 분야의 AI 챗봇 서비스를 만들었습니다. 백엔드와 DB 설계, PM을 맡아 프롬프트 설계, 프론트·백엔드 연계 명세서 작성, 팀 코드 점검을 진행했습니다.',
+    meta: [
+      ['형태', '팀 프로젝트'],
+      ['담당', '백엔드 · DB · PM'],
+      ['기술', 'Flask · OpenAI API · SQLAlchemy'],
     ],
-    repository: 'https://github.com/girint/Chatbot_Project.git',
+    skills: [
+      ['백엔드·API', 'Flask Blueprint로 회원·공지·챗봇 8개 API를 구성하고 OpenAI API를 연동했습니다.'],
+      ['프롬프트·DB 설계', '분야별 시스템 프롬프트와 10개 모델의 DB 구조를 설계했습니다.'],
+      ['PM·협업', '역할 분담, 코드 점검, 프론트·백엔드 연계용 명세서 작성·배부를 맡았습니다.'],
+    ],
+    limit:
+      '대화 저장 연동이 미완성이고, 이전 대화를 포함하지 않는 단발 응답 구조입니다. 챗봇 8개의 중복 코드를 통합하는 것이 개선 과제입니다.',
+    image: null as string | null,
+    repository: 'https://github.com/AI-Chatbot-KingHead/Chatbot_Project',
   },
 ]
-
 type ProjectId = (typeof projects)[number]['id']
 
 function useAnimatedGrowth(target: number) {
@@ -318,15 +357,11 @@ export default function App() {
   const project = selected === null ? null : projects[selected]
   const growth = fedIds.length
   const animatedGrowth = useAnimatedGrowth(growth)
-const isGrowing = Math.abs(animatedGrowth - growth) > 0.001
+  const isGrowing = Math.abs(animatedGrowth - growth) > 0.001
 
-useEffect(() => {
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: 'instant',
-  })
-}, [selected])
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [selected])
 
   function feedProject(id: ProjectId) {
     setFedIds((previous) =>
@@ -341,7 +376,20 @@ useEffect(() => {
         <button className="brand" onClick={() => setSelected(null)}>
           GIRIN<span> / 성장 기록</span>
         </button>
-        <span className="header-note">더 높이, 더 단단하게.</span>
+        <div className="header-right">
+          <span className="header-note">더 높이, 더 단단하게.</span>
+          <nav className="header-links" aria-label="바로가기">
+            <a href={profile.github} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+            {profile.resume && (
+              <a href={profile.resume} target="_blank" rel="noopener noreferrer">
+                이력서
+              </a>
+            )}
+            {profile.email && <a href={`mailto:${profile.email}`}>연락처</a>}
+          </nav>
+        </div>
       </header>
 
       <main>
@@ -356,6 +404,10 @@ useEffect(() => {
                 <br />
                 자랍니다<span>.</span>
               </h1>
+              <p className="identity">
+                {profile.name && `${profile.name} · `}
+                {profile.role} · Python · Flask · SQL · JavaScript
+              </p>
               <p className="intro-description">
                 화면을 만드는 것에서 시작해,
                 <br />
@@ -392,7 +444,9 @@ useEffect(() => {
                   >
                     <span className="food-top">
                       <span className="leaf" aria-hidden="true" />
-                      <span>{completed ? '경험 완료 ✓' : `EXPERIENCE 0${index + 1}`}</span>
+                      <span>
+                        {completed ? '경험 완료 ✓' : `EXPERIENCE 0${index + 1}`}
+                      </span>
                     </span>
                     <h2>{item.name}</h2>
                     <p>{item.capability}</p>
@@ -401,6 +455,24 @@ useEffect(() => {
                 )
               })}
             </div>
+
+            {growth === 4 && !isGrowing && (
+              <div className="finale">
+                <p className="finale-title">단단히 딛고, 더 높은 곳으로.</p>
+                <p>아직 만나지 않은 경험들이 기다리고 있습니다.</p>
+                <div className="finale-links">
+                  <a href={profile.github} target="_blank" rel="noopener noreferrer">
+                    GitHub ↗
+                  </a>
+                  {profile.resume && (
+                    <a href={profile.resume} target="_blank" rel="noopener noreferrer">
+                      이력서 ↗
+                    </a>
+                  )}
+                  {profile.email && <a href={`mailto:${profile.email}`}>연락하기 ↗</a>}
+                </div>
+              </div>
+            )}
           </section>
         ) : (
           <section className="detail panel" key={project.id}>
@@ -434,10 +506,20 @@ useEffect(() => {
                 <h1>{project.title}</h1>
                 <p className="project-description">{project.description}</p>
 
-                <div className="media-placeholder">
-                  <span>PROJECT PREVIEW</span>
-                  <p>실제 프로젝트 화면을 넣을 자리입니다.</p>
-                </div>
+                <dl className="project-meta">
+                  {project.meta.map(([label, value]) => (
+                    <div key={label}>
+                      <dt>{label}</dt>
+                      <dd>{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+
+                {project.image && (
+                  <figure className="project-media">
+                    <img src={project.image} alt={`${project.name} 화면`} />
+                  </figure>
+                )}
 
                 <div className="skill-list">
                   {project.skills.map(([title, description]) => (
@@ -448,18 +530,14 @@ useEffect(() => {
                   ))}
                 </div>
 
+                <p className="project-limit">
+                  <strong>한계와 개선 방향</strong> {project.limit}
+                </p>
+
                 <div className="detail-actions">
-                  {project.repository ? (
-                    <a
-                      href={project.repository}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      GitHub에서 구현 과정 보기 ↗
-                    </a>
-                  ) : (
-                    <span className="pending-link">프로젝트 링크 준비 중</span>
-                  )}
+                  <a href={project.repository} target="_blank" rel="noopener noreferrer">
+                    GitHub에서 구현 과정 보기 ↗
+                  </a>
 
                   {fedIds.includes(project.id) ? (
                     <button
@@ -485,7 +563,7 @@ useEffect(() => {
 
       <footer className="site-footer">
         <span>계속 배우고, 연결하고, 성장합니다.</span>
-        <span>PORTFOLIO — FIRST DRAFT</span>
+        <span>PORTFOLIO{profile.name && ` — ${profile.name}`}</span>
       </footer>
     </div>
   )

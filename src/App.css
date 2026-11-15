@@ -519,3 +519,27 @@
   min-height: 44px;
   padding: 8px 16px 0;
 }
+
+.header-right { display: flex; align-items: center; gap: 24px; }
+.header-links { display: flex; gap: 18px; font-size: 14px; }
+.header-links a, .finale-links a { color: #4f6f45; text-decoration: none; }
+.header-links a:hover, .finale-links a:hover { text-decoration: underline; }
+.identity { margin: 0 0 16px; font-size: 15px; color: #6b7f5e; }
+.project-limit {
+  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6b6252;
+}
+.project-limit strong { margin-right: 8px; color: #3b3226; }
+.finale {
+  grid-column: 1 / -1;
+  margin-top: 24px;
+  padding: 28px 32px;
+  border: 1px solid #e4dcc6;
+  border-radius: 20px;
+  background: #fffdf8;
+  text-align: center;
+}
+.finale-title { margin: 0 0 6px; font-size: 22px; font-weight: 700; }
+.finale-links { display: flex; justify-content: center; gap: 24px; margin-top: 14px; }
