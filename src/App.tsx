@@ -5,7 +5,7 @@ const profile = {
   name: '백기림', // 이름
   role: '풀스택 개발자 지망',
   github: 'https://github.com/girint',
-  //resume: '', // 이력서 PDF 링크
+  resume: '', // 이력서 PDF 링크
   email: 'bgr1614@naver.com', // 연락용 이메일
 }
 
