@@ -85,7 +85,7 @@ type Detail = {
   images: { src: string; caption: string }[]
 }
 
-const img = (file: string) => `${import.meta.env.BASE_URL}images/${file}`
+//const img = (file: string) => `${import.meta.env.BASE_URL}images/${file}`
 
 const details: Record<ProjectId, Detail> = {
   clone: {
