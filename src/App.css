@@ -265,57 +265,6 @@
   word-break: keep-all;
 }
 
-.media-placeholder {
-  min-height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 30px 0;
-  padding: 24px;
-  border: 1px dashed #c9bea8;
-  border-radius: 20px;
-  color: #857565;
-  background: #efe9da;
-  text-align: center;
-}
-
-.media-placeholder span {
-  font-size: 11px;
-  letter-spacing: 2px;
-}
-
-.media-placeholder p {
-  font-size: 13px;
-}
-
-.skill-list {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.skill-card {
-  border: 1px solid #e3ddcf;
-  border-radius: 16px;
-  background: #fffdf7;
-  padding: 20px;
-  transition: transform 180ms ease;
-}
-
-.skill-card h2 {
-  font-size: 16px;
-  margin: 0 0 12px;
-}
-
-.skill-card p {
-  margin: 0;
-  color: #75685b;
-  font-size: 13px;
-  line-height: 1.8;
-  word-break: keep-all;
-}
-
 .detail-actions {
   display: flex;
   align-items: center;
@@ -324,10 +273,6 @@
   flex-wrap: wrap;
   margin-top: 32px;
   font-size: 13px;
-}
-
-.pending-link {
-  color: #857565;
 }
 
 .primary-button {
@@ -349,10 +294,6 @@
     transform: translateY(-4px);
     border-color: #8fa383;
     box-shadow: 0 12px 28px #342c2508;
-  }
-
-  .skill-card:hover {
-    transform: translateY(-3px);
   }
 
   .bone:hover {
@@ -384,10 +325,6 @@
   .detail-layout {
     grid-template-columns: 130px minmax(0, 1fr);
     gap: 24px;
-  }
-
-  .skill-list {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -520,18 +457,12 @@
   padding: 8px 16px 0;
 }
 
+/* ───────── 헤더·소개·마지막 장면 ───────── */
 .header-right { display: flex; align-items: center; gap: 24px; }
 .header-links { display: flex; gap: 18px; font-size: 14px; }
 .header-links a, .finale-links a { color: #4f6f45; text-decoration: none; }
 .header-links a:hover, .finale-links a:hover { text-decoration: underline; }
 .identity { margin: 0 0 16px; font-size: 15px; color: #6b7f5e; }
-.project-limit {
-  margin: 20px 0 0;
-  font-size: 14px;
-  line-height: 1.7;
-  color: #6b6252;
-}
-.project-limit strong { margin-right: 8px; color: #3b3226; }
 .finale {
   grid-column: 1 / -1;
   margin-top: 24px;
@@ -543,3 +474,127 @@
 }
 .finale-title { margin: 0 0 6px; font-size: 22px; font-weight: 700; }
 .finale-links { display: flex; justify-content: center; gap: 24px; margin-top: 14px; }
+
+/* ───────── 프로젝트 상세: 정보 칸·역할·문제해결·갤러리 ───────── */
+.project-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 24px 0 0;
+}
+.project-meta div {
+  padding: 14px 18px;
+  border: 1px solid #e4dcc6;
+  border-radius: 16px;
+  background: #fffdf8;
+}
+.project-meta dt { font-size: 12px; letter-spacing: 0.08em; color: #6b7f5e; }
+.project-meta dd { margin: 4px 0 0; font-size: 15px; color: #3b3226; word-break: keep-all; }
+
+.section-label { margin: 0 0 10px; font-size: 12px; letter-spacing: 0.12em; color: #6b7f5e; }
+.role-card {
+  margin: 28px 0 0;
+  padding: 24px 28px;
+  border: 1px solid #e4dcc6;
+  border-left: 5px solid #6b8f5e;
+  border-radius: 18px;
+  background: #fffdf8;
+}
+.role-summary { margin: 0 0 14px; font-size: 18px; font-weight: 700; color: #3b3226; word-break: keep-all; }
+.contrib-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.contrib-list li { position: relative; padding-left: 26px; line-height: 1.65; color: #4a4234; word-break: keep-all; }
+.contrib-list li::before { content: '✓'; position: absolute; left: 0; font-weight: 700; color: #6b8f5e; }
+
+.trouble { margin: 20px 0 0; padding: 22px 28px; border-radius: 18px; background: #eef2e4; }
+.trouble-grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: start; }
+.trouble-grid strong { display: block; margin-bottom: 6px; color: #3b3226; }
+.trouble-grid p { margin: 0; line-height: 1.65; color: #4a4234; font-size: 14px; word-break: keep-all; }
+.trouble-arrow { font-size: 22px; color: #6b8f5e; padding-top: 22px; }
+
+.project-limit {
+  margin: 20px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6b6252;
+  word-break: keep-all;
+}
+.project-limit strong { margin-right: 8px; color: #3b3226; }
+
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 24px 0 0; }
+.shot {
+  padding: 0;
+  border: 1px solid #e4dcc6;
+  border-radius: 18px;
+  background: #fffdf8;
+  overflow: hidden;
+  cursor: zoom-in;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.shot:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(60, 50, 30, 0.14); }
+.shot img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.shot span { display: block; padding: 12px 16px; font-size: 13px; color: #6b6252; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  background: rgba(20, 18, 12, 0.82);
+  cursor: zoom-out;
+}
+.lightbox img { max-width: 92vw; max-height: 80vh; border-radius: 14px; }
+.lightbox p { margin: 0; color: #f3efe2; font-size: 14px; }
+
+/* ───────── 새 구성요소의 작은 화면 대응 ───────── */
+@media (max-width: 720px) {
+  .trouble-grid { grid-template-columns: 1fr; }
+  .trouble-arrow { padding-top: 0; transform: rotate(90deg); justify-self: center; }
+}
+@media (max-width: 639px) {
+  .header-right { gap: 12px; }
+  .header-links { gap: 12px; font-size: 13px; }
+  .project-meta { grid-template-columns: 1fr; }
+  .role-card, .trouble { padding: 20px; }
+  .finale { padding: 22px 18px; }
+  .finale-links { flex-wrap: wrap; gap: 16px; }
+}
+
+
+.copy-email { position: relative; display: inline-flex; align-items: center; }
+.copy-email-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: #4f6f45;
+  cursor: pointer;
+}
+.copy-email-button:hover { text-decoration: underline; }
+.copy-email-toast {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: 1px solid #e4dcc6;
+  border-radius: 10px;
+  background: #fffdf8;
+  box-shadow: 0 8px 20px rgba(60, 50, 30, 0.12);
+  font-size: 13px;
+  color: #3b3226;
+  white-space: nowrap;
+}
+.finale-links .copy-email-toast {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}

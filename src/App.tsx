@@ -2,11 +2,11 @@ import { useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const profile = {
-  name: '백기림', // 이름
+  name: '백기림',
   role: '풀스택 개발자 지망',
   github: 'https://github.com/girint',
   resume: '', // 이력서 PDF 링크
-  email: 'bgr1614@naver.com', // 연락용 이메일
+  email: 'bgr1614@naver.com',
 }
 
 const projects = [
@@ -22,14 +22,8 @@ const projects = [
       ['기간', '2025.09.05 ~ 09.19 (약 2주)'],
       ['기술', 'HTML · CSS · JavaScript · 카카오 도서 검색 API'],
     ],
-    skills: [
-      ['직접 구현', '슬라이더 5개를 함수 하나로 통합하고, 반복되는 카드 구조를 템플릿으로 정리했습니다.'],
-      ['API 연동', '카카오 도서 검색 API를 호출해 표지·제목·저자를 화면에 채웠습니다.'],
-      ['화면 대응', '검색창 패널, 탭, 자동 배너 동작과 767px 이하 모바일 레이아웃을 구현했습니다.'],
-    ],
     limit:
       '별점·리뷰 수는 학습용 더미 데이터이고, 모바일 대응은 한 구간(767px 이하)만 구현했습니다. 디자인과 에셋은 원본 사이트를 참고했습니다.',
-    image: null as string | null,
     repository: 'https://github.com/girint/firsrt_project',
   },
   {
@@ -44,36 +38,24 @@ const projects = [
       ['기간', '2025.09.23 ~ 10.01 (9일)'],
       ['기술', 'Flask · SQLAlchemy · Flask-Migrate · SQLite'],
     ],
-    skills: [
-      ['백엔드 구조', 'Blueprint 7개로 기능을 나누고 회원·구장·경기·마이페이지 기능을 구현했습니다.'],
-      ['DB 설계', 'SQLAlchemy 모델 6개와 관계를 설계하고 Flask-Migrate로 스키마 변경을 관리했습니다.'],
-      ['인증·예약 로직', '해시 비밀번호 로그인과 세션 인증, 정원 기반 예약 상태 계산, 신청·취소를 구현했습니다.'],
-    ],
     limit:
       '신청·취소의 소유자 검증과 중복 신청 방지가 보완 과제입니다. 결제는 가상 충전이며 DB는 SQLite를 사용했습니다.',
-    image: null as string | null,
     repository: 'https://github.com/FOREVER-4season/team_4',
   },
   {
-    id: 'yolo',
-    name: 'YOLO 프로젝트',
-    capability: '데이터로 개선하는 힘',
+    id: 'yolo8',
+    name: '아동학대 감지 프로젝트',
+    capability: 'ai 활용하는 힘',
     title: '데이터를 바로잡고, 다시 학습하다.',
     description:
       '어린이집 영상에서 위험 행동 신호를 탐지해 교사의 확인을 돕는 보조 시스템을 팀으로 개발했습니다. 데이터 수집과 정제, 라벨링 기준 수립부터 학습, 결과 분석 후 데이터 수정까지 진행했습니다.',
     meta: [
       ['형태', '팀 프로젝트'],
       ['담당', '데이터 수집·정제 · 라벨링 · 학습 · 결과 분석'],
-      ['기술', 'YOLO · Python'],
-    ],
-    skills: [
-      ['데이터 구축', '학습 데이터를 수집·정제하고 라벨링 기준을 세워 라벨링했습니다.'],
-      ['모델 학습', '16개 클래스 동시 학습은 mAP50 20%에 그쳤습니다. 클래스를 줄여 명확화하고 개별 학습한 결과 75%로 개선했습니다.'],
-      ['원인 분석', '통합 모델은 71%로 목표에 못 미쳤고, 클래스 불균형 등 원인을 분석했습니다.'],
+      ['기술', 'yolo8 · Python'],
     ],
     limit:
       '목표(개별 90%, 통합 85%)에는 미치지 못했습니다. 이 도구는 학대 여부를 판단하지 않고 교사의 확인을 돕는 신호 탐지 보조 도구입니다.',
-    image: null as string | null,
     repository: 'https://github.com/girint/Child_Abuse_Sign1',
   },
   {
@@ -88,19 +70,98 @@ const projects = [
       ['담당', '백엔드 · DB · PM'],
       ['기술', 'Flask · OpenAI API · SQLAlchemy'],
     ],
-    skills: [
-      ['백엔드·API', 'Flask Blueprint로 회원·공지·챗봇 8개 API를 구성하고 OpenAI API를 연동했습니다.'],
-      ['프롬프트·DB 설계', '분야별 시스템 프롬프트와 10개 모델의 DB 구조를 설계했습니다.'],
-      ['PM·협업', '역할 분담, 코드 점검, 프론트·백엔드 연계용 명세서 작성·배부를 맡았습니다.'],
-    ],
     limit:
       '대화 저장 연동이 미완성이고, 이전 대화를 포함하지 않는 단발 응답 구조입니다. 챗봇 8개의 중복 코드를 통합하는 것이 개선 과제입니다.',
-    image: null as string | null,
     repository: 'https://github.com/AI-Chatbot-KingHead/Chatbot_Project',
   },
 ]
+
 type ProjectId = (typeof projects)[number]['id']
 
+type Detail = {
+  role: string
+  contributions: string[]
+  trouble?: { problem: string; solution: string }
+  images: { src: string; caption: string }[]
+}
+
+const img = (file: string) => `${import.meta.env.BASE_URL}images/${file}`
+
+const details: Record<ProjectId, Detail> = {
+  clone: {
+    role: '개인 프로젝트 · 화면 구현부터 API 연동까지 전부 직접 작성',
+    contributions: [
+      '슬라이더 5개를 touchbar() 함수 하나로 통합: 이동 단위·여백·노출 개수를 인자로 받는 구조',
+      '카카오 도서 검색 API를 async/await로 호출해 표지·제목·저자를 카드에 채우고, 요일 탭별로 콘텐츠 전환',
+      '반복되는 카드를 요소별 생성 방식에서 템플릿 + forEach 방식으로 개선',
+      '검색창 포커스 시 최근 검색어 패널, 탭 활성화, setInterval 자동 순환 배너 구현',
+      '767px 이하 모바일 레이아웃(media.css)과 flex·hover·transition 스타일링을 직접 작성',
+    ],
+    trouble: {
+      problem:
+        '반복되는 카드를 요소 하나씩 만들어 붙이는 방식이라 코드가 길고 수정이 어려웠습니다.',
+      solution:
+        '구조를 템플릿으로 통일하고 forEach로 한 번에 생성하는 방식으로 바꿔 중복을 줄였습니다.',
+    },
+    images: [
+      // { src: img('clone-main.png'), caption: '메인 화면' },
+    ],
+  },
+  backend: {
+    role: '4인 팀 · 백엔드 전담 (구조 설계 · DB 모델링 · 인증 · 예약 로직)',
+    contributions: [
+      '앱 팩토리 패턴과 Blueprint 7개로 도메인(인증·구장·경기·마이페이지·머니)을 분리',
+      'SQLAlchemy 모델 6개 설계, UserMatch 중간 테이블로 회원-경기 다대다 관계와 cascade 삭제 구성',
+      'Flask-Migrate로 스키마 변경 이력 관리 (마이그레이션 6개)',
+      '해시 비밀번호, 세션 로그인, 요청마다 로그인 사용자를 불러오는 before_app_request, login_required, WTForms 서버 검증',
+      '날짜별 경기 조회, 정원 대비 신청 인원으로 상태 계산(신청가능·마감임박·신청마감), 신청·취소, 본인만 보는 내 신청 내역',
+      'JSON API와 가상 머니 충전 구현',
+    ],
+     trouble: { 
+      problem: 
+        '팀원과의 협동하는 부분이 어려웠습니다',
+    solution:
+       '각 역할에 맡는 분배를 적절히 정하고 api 명세서를 제안했습니다' 
+    },
+    images: [
+      // { src: img('futsal-list.png'), caption: '경기 목록과 신청 상태' },
+    ],
+  },
+  yolo8: {
+    role: '팀 프로젝트 · 데이터 수집부터 라벨링 기준 수립, 학습, 결과 분석까지',
+    contributions: [
+      '학습용 데이터를 직접 수집하고 정제',
+      '라벨링 기준을 세우고 직접 라벨링: 클래스를 16개에서 11개로 줄이고 각 행동의 정의를 명확히 정리',
+      'yolo8 모델 개별 학습과 통합 학습, 재학습 반복',
+      '통합 모델 성능 하락(75% → 71%) 원인 분석: 클래스 불균형, 예측 충돌, NMS 미흡',
+    ],
+    trouble: {
+      problem:
+        '16개 클래스를 동시에 학습하자 mAP50이 20%에 그쳤습니다. 클래스당 데이터가 50~200개 수준이었고 라벨링 기준도 일정하지 않았습니다.',
+      solution:
+        '모호한 클래스를 정리해 11개로 줄이고 라벨링 기준을 다시 세운 뒤 개별 학습해 mAP50을 75%까지 올렸습니다.',
+    },
+    images: [
+      // { src: img('yolo8-graph.png'), caption: '학습 결과 그래프' },
+    ],
+  },
+  chatbot: {
+    role: '팀 프로젝트 · 백엔드 · DB 설계 · PM',
+    contributions: [
+      'Flask Blueprint로 회원·공지·마이페이지·챗봇 8개 API 구성',
+      '분야별 시스템 프롬프트 설계: 페르소나, 어조, 단계형 답변 구조',
+      'OpenAI API 연동: 질문 응답, 분야 소개, 최근 상담 5건 요약 리포트',
+      'SQLAlchemy 모델 10개 설계, Flask-Migrate 관리, 기본 챗봇 8개 시드 스크립트 작성',
+      'PM: 역할 분담, 팀원 코드 점검, 프론트·백엔드 연계용 명세서 작성·배부',
+    ],
+    // trouble: { problem: '', solution: '' },
+    images: [
+      // { src: img('chatbot-chat.png'), caption: '챗봇 대화 화면' },
+    ],
+  },
+}
+
+// 시작과 끝이 부드럽게 이어지는 보간
 function useAnimatedGrowth(target: number) {
   const [value, setValue] = useState(target)
   const currentValue = useRef(target)
@@ -139,7 +200,6 @@ function useAnimatedGrowth(target: number) {
           1,
         )
 
-        // 最初と最後を穏やかにする補間
         const eased = progress * progress * (3 - 2 * progress)
         const next = from + (target - from) * eased
 
@@ -162,7 +222,6 @@ function useAnimatedGrowth(target: number) {
 
   return value
 }
-// 시작과 끝이 부드럽게 이어지는 보간
 
 function Giraffe({ growth }: { growth: number }) {
   const neckLength = 95 + growth * 38
@@ -227,10 +286,7 @@ function Giraffe({ growth }: { growth: number }) {
       </g>
 
       {/* 같은 세계 안에서 점차 드러나는 지면과 길 */}
-      <path
-        d="M0 420 Q250 375 500 420 L500 480 L0 480 Z"
-        fill="#e5e4cc"
-      />
+      <path d="M0 420 Q250 375 500 420 L500 480 L0 480 Z" fill="#e5e4cc" />
 
       <path
         d="M275 395 Q305 420 365 480"
@@ -264,13 +320,7 @@ function Giraffe({ growth }: { growth: number }) {
           strokeLinecap="round"
         />
 
-        <ellipse
-          cx="266"
-          cy="345"
-          rx="92"
-          ry="48"
-          fill="#dbad5b"
-        />
+        <ellipse cx="266" cy="345" rx="92" ry="48" fill="#dbad5b" />
 
         {/* 목 길이와 머리 위치를 함께 변경 */}
         <rect
@@ -312,14 +362,7 @@ function Giraffe({ growth }: { growth: number }) {
           />
           <ellipse cx="182" cy="15" rx="17" ry="9" fill="#dbad5b" />
           <ellipse cx="240" cy="15" rx="17" ry="9" fill="#dbad5b" />
-          <rect
-            x="187"
-            y="3"
-            width="56"
-            height="58"
-            rx="25"
-            fill="#dbad5b"
-          />
+          <rect x="187" y="3" width="56" height="58" rx="25" fill="#dbad5b" />
           <ellipse cx="221" cy="48" rx="28" ry="17" fill="#e9c580" />
           <circle cx="222" cy="24" r="4" fill="#342c25" />
           <path
@@ -337,12 +380,7 @@ function Giraffe({ growth }: { growth: number }) {
       </g>
 
       {/* 가까운 풀 */}
-      <g
-        stroke="#8fa079"
-        strokeWidth="3"
-        strokeLinecap="round"
-        fill="none"
-      >
+      <g stroke="#8fa079" strokeWidth="3" strokeLinecap="round" fill="none">
         <path d="M40 460 L35 443 M40 460 L47 440" />
         <path d="M115 470 L108 452 M115 470 L122 449" />
         <path d="M455 462 L449 443 M455 462 L464 445" />
@@ -351,10 +389,47 @@ function Giraffe({ growth }: { growth: number }) {
   )
 }
 
+//이메일 복사
+function CopyEmail({ email, label }: { email: string; label: string }) {
+  const [copied, setCopied] = useState(false)
+
+  async function handleClick() {
+    try {
+      await navigator.clipboard.writeText(email)
+    } catch {
+      // 복사가 막힌 환경에서는 주소가 담긴 창을 띄워 직접 복사하게 해요
+      window.prompt('이메일 주소를 복사해 주세요', email)
+      return
+    }
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 2200)
+  }
+
+  return (
+    <span className="copy-email">
+      <button type="button" className="copy-email-button" onClick={handleClick}>
+        {label}
+      </button>
+      {copied && (
+        <span className="copy-email-toast" role="status">
+          복사됨 ✓ {email}
+        </span>
+      )}
+    </span>
+  )
+}
+
+
+
+
 export default function App() {
   const [selected, setSelected] = useState<number | null>(null)
   const [fedIds, setFedIds] = useState<ProjectId[]>([])
+  const [zoom, setZoom] = useState<{ src: string; caption: string } | null>(
+    null,
+  )
   const project = selected === null ? null : projects[selected]
+  const detail = project ? details[project.id] : null
   const growth = fedIds.length
   const animatedGrowth = useAnimatedGrowth(growth)
   const isGrowing = Math.abs(animatedGrowth - growth) > 0.001
@@ -362,6 +437,15 @@ export default function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [selected])
+
+  useEffect(() => {
+    if (!zoom) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setZoom(null)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [zoom])
 
   function feedProject(id: ProjectId) {
     setFedIds((previous) =>
@@ -387,7 +471,7 @@ export default function App() {
                 이력서
               </a>
             )}
-            {profile.email && <a href={`mailto:${profile.email}`}>연락처</a>}
+            {profile.email && <CopyEmail email={profile.email} label="연락처" />}
           </nav>
         </div>
       </header>
@@ -469,7 +553,7 @@ export default function App() {
                       이력서 ↗
                     </a>
                   )}
-                  {profile.email && <a href={`mailto:${profile.email}`}>연락하기 ↗</a>}
+                  {profile.email && <CopyEmail email={profile.email} label="연락하기" />}
                 </div>
               </div>
             )}
@@ -515,20 +599,52 @@ export default function App() {
                   ))}
                 </dl>
 
-                {project.image && (
-                  <figure className="project-media">
-                    <img src={project.image} alt={`${project.name} 화면`} />
-                  </figure>
+                {detail && detail.images.length > 0 && (
+                  <div className="gallery">
+                    {detail.images.map((shot) => (
+                      <button
+                        type="button"
+                        className="shot"
+                        key={shot.src}
+                        onClick={() => setZoom(shot)}
+                      >
+                        <img src={shot.src} alt={shot.caption} loading="lazy" />
+                        <span>{shot.caption}</span>
+                      </button>
+                    ))}
+                  </div>
                 )}
 
-                <div className="skill-list">
-                  {project.skills.map(([title, description]) => (
-                    <section className="skill-card" key={title}>
-                      <h2>{title}</h2>
-                      <p>{description}</p>
-                    </section>
-                  ))}
-                </div>
+                {detail && (
+                  <section className="role-card">
+                    <p className="section-label">MY ROLE</p>
+                    <p className="role-summary">{detail.role}</p>
+                    <ul className="contrib-list">
+                      {detail.contributions.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </section>
+                )}
+
+                {detail?.trouble && (
+                  <section className="trouble">
+                    <p className="section-label">PROBLEM → SOLUTION</p>
+                    <div className="trouble-grid">
+                      <div>
+                        <strong>문제</strong>
+                        <p>{detail.trouble.problem}</p>
+                      </div>
+                      <span className="trouble-arrow" aria-hidden="true">
+                        →
+                      </span>
+                      <div>
+                        <strong>해결</strong>
+                        <p>{detail.trouble.solution}</p>
+                      </div>
+                    </div>
+                  </section>
+                )}
 
                 <p className="project-limit">
                   <strong>한계와 개선 방향</strong> {project.limit}
@@ -565,6 +681,18 @@ export default function App() {
         <span>계속 배우고, 연결하고, 성장합니다.</span>
         <span>PORTFOLIO{profile.name && ` — ${profile.name}`}</span>
       </footer>
+
+      {zoom && (
+        <div
+          className="lightbox"
+          onClick={() => setZoom(null)}
+          role="dialog"
+          aria-label="이미지 확대"
+        >
+          <img src={zoom.src} alt={zoom.caption} />
+          <p>{zoom.caption} · 클릭하거나 Esc로 닫기</p>
+        </div>
+      )}
     </div>
   )
 }
